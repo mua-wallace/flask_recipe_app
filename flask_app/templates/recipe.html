@@ -1,11 +1,11 @@
 {%extends 'base.html' %} {%block title %}
 <title>Home page</title>
 {%endblock%} {%block content%}
-<h1>Welcome, Wallace</h1>
+<h1>Welcome, {{user.first_name}}</h1>
 <div class="d-flex bd-highlight">
   <div class="p-2 flex-grow-1 bd-highlight">All posted recipes:</div>
   <div class="p-2 bd-highlight">
-    <a href="{{url_for('new_recipe')}}">Create</a>
+    <a href="{{url_for('new_recipe')}}"> <i class="fa-solid fa-plus"></i>Create</a>
   </div>
   <div class="p-2 bd-highlight">
     <a href="#">Logout</a>
