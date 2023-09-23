@@ -7,7 +7,7 @@
     <a href="{{url_for('recipe')}}">back to recipe</a>
   </div>
   <div class="p-2 bd-highlight">
-    <a href="#">Logout</a>
+    <a href="{{url_for('logout')}}">Logout</a>
   </div>
 </div>
 <h3>Add a new Recipe</h3>
@@ -33,7 +33,7 @@
             class="form-control"
             id="exampleFormControlTextarea1"
             rows="3"
-            name='desc'
+            name='description'
           ></textarea>
         </div>
         <div class="mb-3">
@@ -73,7 +73,7 @@
               type="radio"
               name="can_be_cooked_in_30mins"
               id="inlineRadio1"
-              value="option1"
+              value=1
             />
             <label class="form-check-label" for="inlineRadio1">Yes</label>
           </div>
@@ -83,7 +83,7 @@
               type="radio"
               name="can_be_cooked_in_30mins"
               id="inlineRadio2"
-              value="option2"
+              value=0
             />
             <label class="form-check-label" for="inlineRadio2">No</label>
         </div>

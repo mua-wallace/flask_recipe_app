@@ -5,7 +5,7 @@ import re
 
 
 class User:
-    def __init__(self,data):
+    def __init__(self, data):
         self.id = data['id']
         self.first_name= data['first_name']
         self.last_name= data['last_name']
@@ -17,14 +17,13 @@ class User:
         
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO users (first_name, last_name, email, password, created_at,updated_at) VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s, NOW(),NOW())"
+        query = "INSERT INTO users (first_name, last_name, email, password, created_at,updated_at) VALUES (%(first_name)s,%(last_name)s,%(email)s,%(password)s, NOW(),NOW());"
         return connectToMySQL('recipe').query_db(query,data)
     
     @classmethod
     def get_user_by_id(cls, data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
         result = connectToMySQL('recipe').query_db(query,data)
-        print(result)
         return cls(result[0])
     
     
@@ -35,6 +34,28 @@ class User:
         if len(result) < 1:
             return False
         return cls(result[0])
+    
+    @classmethod
+    def get_user_with_recipes(cls, data ):
+        query = "SELECT * FROM users LEFT JOIN recipes ON recipes.user_id = users.id WHERE user.id = %(id)s;"
+        results = connectToMySQL('recipe').query_db(query, data )
+    
+        # results will be a list of users objects with the recipes attached to each row. 
+        recipe = cls(results[0])
+        for row_from_db in results:
+            # Now we parse the recipe data to make instances of recipes and add them into our list.
+            recipe_data = {
+                "id": row_from_db["recipes.id"],
+                "name": row_from_db["recipes.name"],
+                "description": row_from_db["recipes.description"],
+                "instructions": row_from_db["recipes.instructions"],
+                "cooked_date": row_from_db["recipes.cooked_date"],
+                "can_be_cooked_in_30mins": row_from_db["recipes.can_be_cooked_in_30mins"],
+                "created_at": row_from_db["recipes.created_at"],
+                "updated_at": row_from_db["recipes.updated_at"]
+            }
+            recipe.recipes.append(recipe.Recipe( recipe_data))
+        return recipe
     
     # static method used for validations
     @staticmethod
@@ -62,3 +83,5 @@ class User:
             flash("Invalid email address", 'register')
             is_valid = False
         return is_valid
+    
+    

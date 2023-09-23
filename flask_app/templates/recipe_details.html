@@ -1,58 +1,55 @@
-{% extends 'base.html' %}
-
-
-{%block title%}
-    <title>Recipe details</title>
-{%endblock%}
-    
-{%block content%}
+{% extends 'base.html' %} {%block title%}
+<title>Recipe details</title>
+{%endblock%} {%block content%}
 <div class="d-flex bd-highlight">
-    <div class="p-2 flex-grow-1 bd-highlight"></div>
-    <div class="p-2 bd-highlight">
-      <a href="{{url_for('recipe')}}">back to recipe</a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="#">Logout</a>
-    </div>
+  <div class="p-2 flex-grow-1 bd-highlight"></div>
+  <div class="p-2 bd-highlight">
+    <a href="{{url_for('recipe')}}">back to recipe</a>
   </div>
-  <h1>Welcome, Wallace</h1>
-  <div class="d-flex bd-highlight">
-    <div class="p-2 flex-grow-1 bd-highlight"><h3>Achu</h3></div>
-    <div class="p-2 bd-highlight">
-      <p>Posted by: Arlette</p>
-    </div>
+  <div class="p-2 bd-highlight">
+    <a href="{{url_for('logout')}}">Logout</a>
   </div>
-  <div class="card">
-    <div class="card-body text-dark">
-      <div class="container">
-        <div class="row g-1">
-          <div class="col-4">
-            <div class="p-3">Description:</div>
-          </div>
-          <div class="col-8">
-            <div class="p-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime amet fuga exercitationem!</div>
-          </div>
-          <div class="col-4">
-            <div class="p-2 ">Under 30 minutes?</div>
-          </div>
-          <div class="col-8">
-            <div class="p-2">No</div>
-          </div>
-          <div class="col-4">
-            <div class="p-2 ">Instructions</div>
-          </div>
-          <div class="col-8">
-            <div class="p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi molestias nam earum totam dicta voluptatem praesentium obcaecati temporibus. Necessitatibus, quibusdam?</div>
-          </div>
-          <div class="col-4">
-            <div class="p-2 ">Date Made</div>
-          </div>
-          <div class="col-8">
-            <div class="p-2">September 20, 2023</div>
-          </div>
+</div>
+<div class="d-flex bd-highlight">
+  <div class="p-2 flex-grow-1 bd-highlight"><h3>{{details.name}}</h3></div>
+  <div class="p-2 bd-highlight">
+    <p>Posted by: {{details.user.first_name}}</p>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body text-dark">
+    <div class="container">
+      <div class="row g-1">
+        <div class="col-4">
+          <div class="p-3">Description:</div>
+        </div>
+        <div class="col-8">
+          <div class="p-2">{{details.description}}</div>
+        </div>
+        <div class="col-4">
+          <div class="p-2">Under 30 minutes?</div>
+        </div>
+        <div class="col-8">
+          {% if details.can_be_cooked_in_30mins == 1%}
+          <div class="p-2">Yes</div>
+          {% else %}
+          <div class="p-2">No</div>
+          {%endif%}
+        </div>
+        <div class="col-4">
+          <div class="p-2">Instructions</div>
+        </div>
+        <div class="col-8">
+          <div class="p-2">{{details.instructions}}</div>
+        </div>
+        <div class="col-4">
+          <div class="p-2">Cooked Date</div>
+        </div>
+        <div class="col-8">
+          <div class="p-2">{{details.cooked_date.strftime('%B %d, %Y')}}</div>
         </div>
       </div>
-
     </div>
+    {%endblock%}
   </div>
-{%endblock%}
+</div>

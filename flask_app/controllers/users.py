@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt
 from flask import render_template,redirect, request,session, flash
 
 from flask_app.models.user import User
+from flask_app.models.recipe import Recipe
 
 bcrypt = Bcrypt(app)
 # register  route
@@ -60,38 +61,7 @@ def process_register():
     return redirect('/recipes')
 
 
-# All posted recipes
-@app.route("/recipes")
-def recipe():
-    if 'user_id' not in session:
-        return redirect('/logout')
-    data ={
-        'id': session['user_id']
-    }
-    return render_template("recipe.html", user = User.get_user_by_id(data))
 
-# create new recipe form
-@app.route("/recipes/new")
-def new_recipe():
-    return render_template("recipe_form.html")
-
-
-# create edit recipe form
-@app.route("/recipes/edit")
-def edit_recipe():
-    return render_template("edit_recipe.html")
-
-
-
-# process recipe update
-@app.route("/process_update", methods=['POST'])
-def process_update():
-    return redirect('/recipes')
-
-#  details of a specific recipe
-@app.route("/recipes/details")
-def recipe_details():
-    return render_template("recipe_details.html")
 
 
 
